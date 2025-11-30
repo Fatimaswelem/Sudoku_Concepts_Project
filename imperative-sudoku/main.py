@@ -1,0 +1,1 @@
+# Entry point that initializes the Pygame GUI and manages the main application loop using mutable state.

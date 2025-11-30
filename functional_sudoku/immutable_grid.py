@@ -1,0 +1,1 @@
+# Provides pure helper functions to parse files into read-only tuples and format output without side effects.

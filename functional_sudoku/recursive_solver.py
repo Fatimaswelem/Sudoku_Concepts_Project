@@ -1,0 +1,1 @@
+# Implements the solver using pure recursion, passing new board copies instead of modifying variables.

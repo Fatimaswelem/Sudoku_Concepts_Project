@@ -1,0 +1,1 @@
+# Entry point that loads the puzzle into an immutable structure and prints the recursive solution to the console.
