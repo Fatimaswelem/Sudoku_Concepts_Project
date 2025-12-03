@@ -1,7 +1,5 @@
 # Entry point that loads the puzzle into an immutable structure and prints the recursive solution to the console.
 
-# Functional: Reads all lines at once and creates a frozen structure
-
 import os
 from immutable_grid import Board, load_board_from_file
 from recursive_solver import solve
