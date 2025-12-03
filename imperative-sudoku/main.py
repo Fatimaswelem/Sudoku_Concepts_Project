@@ -4,7 +4,8 @@ import pygame
 import sys
 import os
 from state import SudokuGrid
-from gui import SudokuGUI  # We will create this file next!
+from gui import SudokuGUI 
+from logic import SudokuSolver
 
 # --- Configuration ---
 WINDOW_WIDTH = 540
@@ -12,54 +13,54 @@ WINDOW_HEIGHT = 600
 FPS = 60
 
 def main():
-    # 1. Initialize Pygame
     pygame.init()
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    pygame.display.set_caption("Sudoku - Imperative Version")
+    pygame.display.set_caption("Sudoku - Imperative AI Solver")
     clock = pygame.time.Clock()
 
-    # 2. Initialize the Mutable State (The Grid)
+    # 1. Initialize State
     game_state = SudokuGrid()
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    puzzle_path = os.path.join(current_dir, "..", "puzzles", "puzzle1.txt")
     
-    # Construct path to the shared puzzle file
-    # Note: We go up one level (..) then into 'puzzles'
-    puzzle_path = os.path.join("..", "puzzles", "puzzle1.txt")
-    
-    # Load the puzzle (Modifies game_state in place)
-    game_state.load_from_file(puzzle_path)
+    if os.path.exists(puzzle_path):
+        game_state.load_from_file(puzzle_path)
+    else:
+        print(f"Warning: Puzzle file not found at {puzzle_path}")
 
-    # 3. Initialize the GUI Renderer
-    # We pass the screen so the GUI knows where to draw
+    # 2. Initialize GUI
     ui = SudokuGUI(screen)
 
-    # 4. The Imperative Game Loop
-    # This is the definition of imperative: "While this is true, do this..."
+    # 3. Initialize Solver
+    solver = SudokuSolver(game_state, ui)
+
+    print("AI Ready. Press SPACE to watch the solver run.")
+
     running = True
+    solved = False
+
     while running:
-        # A. Event Handling (Check for inputs)
+        # A. Event Handling
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
             
-            # (Future: Add mouse clicks here to select cells)
+            # TRIGGER: One button to start the AI
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and not solved:
+                    print("Starting Solver...")
+                    solver.solve()
+                    solved = True
+                    print("Solved!")
 
-        # B. Update State
-        # (Future: logic.solve_step() would go here for the AI)
-
-        # C. Draw to Screen
-        screen.fill((255, 255, 255))  # Clear screen with White
+        # B. Draw to Screen
+        ui.update(game_state)
         
-        # We ask the GUI to draw the current state of the board
-        current_board = game_state.get_board()
-        ui.draw_board(current_board)
-        
-        # D. Refresh Display
-        pygame.display.flip()
+        # C. Refresh Display
         clock.tick(FPS)
 
-    # Cleanup
     pygame.quit()
     sys.exit()
 
 if __name__ == "__main__":
-    main()
+    main() 
