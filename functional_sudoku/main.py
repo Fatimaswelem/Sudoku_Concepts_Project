@@ -1,48 +1,41 @@
-# Entry point that loads the puzzle into an immutable structure and prints the recursive solution to the console.
-
 import os
 from immutable_grid import Board, load_board_from_file
 from recursive_solver import solve
 
+# ---------- PURE BOARD STRING FUNCTIONS ----------
+def board_to_string(board: Board) -> str:
+    return _rows_to_string(board, 0)
 
-# Pretty Print (Recursive)
-
-def print_board(board: Board) -> None:
-    _print_row(board, 0)
-
-def _print_row(board: Board, r: int):
+def _rows_to_string(board: Board, r: int) -> str:
     if r == 9:
-        return
+        return ""
+    line = ""
     if r != 0 and r % 3 == 0:
-        print("-" * 21)
-    _print_cell(board, r, 0)
-    print()
-    _print_row(board, r + 1)
+        line += "-" * 21 + "\n"
+    line += _cells_to_string(board, r, 0) + "\n"
+    return line + _rows_to_string(board, r + 1)
 
-def _print_cell(board: Board, r: int, c: int):
+def _cells_to_string(board: Board, r: int, c: int) -> str:
     if c == 9:
-        return
-    if c != 0 and c % 3 == 0:
-        print("| ", end="")
+        return ""
+    prefix = "| " if c != 0 and c % 3 == 0 else ""
     val = board[r][c] if board[r][c] != 0 else "."
-    print(val, end=" ")
-    _print_cell(board, r, c + 1)
+    return prefix + str(val) + " " + _cells_to_string(board, r, c + 1)
 
-# Entry Point
-
+# ---------- ENTRY POINT ----------
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = os.path.join(base_dir, "../puzzles/puzzle2.txt")  # external file with puzzle
+    filename = os.path.join(base_dir, "../puzzles/puzzle2.txt")
     initial_board: Board = load_board_from_file(filename)
 
     print("Original Sudoku Board:")
-    print_board(initial_board)
+    print(board_to_string(initial_board))
 
     print("\nSolving...\n")
     solution = solve(initial_board)
 
     print("Solved Sudoku Board:")
     if solution:
-        print_board(solution)
+        print(board_to_string(solution))
     else:
         print("No solution found.")
