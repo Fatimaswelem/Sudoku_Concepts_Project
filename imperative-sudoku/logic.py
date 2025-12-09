@@ -6,6 +6,7 @@ class SudokuSolver:
         self.grid_obj = grid_object
         self.gui = gui_object 
         self.board = grid_object.get_board()
+        self.steps = 0 # NEW: Counter to track attempts
 
     def is_valid(self, row, col, num):
         """Checks if placing 'num' is valid using ITERATION."""
@@ -24,7 +25,7 @@ class SudokuSolver:
 
     def solve(self):
         """
-        Solves the board using Backtracking with VISUALIZATION.
+        Solves the board using Backtracking with OPTIMIZED VISUALIZATION.
         """
         find = self.find_empty()
         if not find:
@@ -37,17 +38,23 @@ class SudokuSolver:
                 # 1. Mutate State
                 self.grid_obj.update_cell(row, col, i)
                 
-                # 2. VISUALIZE: Update the screen immediately!
-                self.gui.update(self.grid_obj)
-                # pygame.time.delay(50) # Optional: Uncomment to slow it down (AI is very fast!)
+                # 2. VISUALIZE: Update screen every 50 steps only!
+                self.steps += 1
+                if self.steps % 50 == 0: 
+                    self.gui.update(self.grid_obj)
+                    pygame.event.pump() # Keeps window from freezing on Mac
 
                 # 3. Recursive Step
                 if self.solve():
                     return True
 
-                # 4. Backtrack (Mutate State back to 0)
+                # 4. Backtrack
                 self.grid_obj.update_cell(row, col, 0)
-                self.gui.update(self.grid_obj) # Visualize the backtrack removal
+                
+                # OPTIONAL: Visualizing backtracks makes it look cooler but slower.
+                # Uncomment the next two lines if you want to see deletions too.
+                if self.steps % 50 == 0:
+                    self.gui.update(self.grid_obj)
 
         return False
 

@@ -24,10 +24,10 @@ class SudokuGrid:
                 # Instead of a loop or list comprehension, we use map().
                 # map() takes a function (int) and applies it to every item in the list.'''
                 # COMMENTED BC IT TAKES WAY TOO LONG TO EXCUTE (~2 MINUTES ON MY MACHINE)
-                #row = list(map(int, line.split()))
+                row = list(map(int, line.split()))
 
                 # ---IMPERATIVE IMPLEMENTATION---
-                row = [int(num) for num in line.split()]
+                #row = [int(num) for num in line.split()]
 
                 new_grid.append(row)
         
