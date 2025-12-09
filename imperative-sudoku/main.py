@@ -20,13 +20,21 @@ def main():
 
     # 1. Initialize State
     game_state = SudokuGrid()
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    puzzle_path = os.path.join(current_dir, "..", "puzzles", "puzzle1.txt")
     
+    # --- FIX: USE ABSOLUTE PATHS ---
+    # This finds the exact folder where main.py lives
+    base_folder = os.path.dirname(os.path.abspath(__file__))
+    # This goes up one level to 'Sudoku_Concepts_Project', then down to 'puzzles'
+    puzzle_path = os.path.join(base_folder, "..", "puzzles", "puzzle1.txt")
+    
+    # Debug print to show you exactly where it is looking
+    print(f"Looking for puzzle at: {puzzle_path}")
+
     if os.path.exists(puzzle_path):
         game_state.load_from_file(puzzle_path)
     else:
-        print(f"Warning: Puzzle file not found at {puzzle_path}")
+        print(f"CRITICAL ERROR: Puzzle file not found at {puzzle_path}")
+        print("Please check that your folder structure is: Sudoku_Concepts_Project/puzzles/puzzle1.txt")
 
     # 2. Initialize GUI
     ui = SudokuGUI(screen)
@@ -63,4 +71,4 @@ def main():
     sys.exit()
 
 if __name__ == "__main__":
-    main() 
+    main()

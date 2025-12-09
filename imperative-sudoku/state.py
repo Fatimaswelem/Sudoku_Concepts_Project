@@ -21,6 +21,10 @@ class SudokuGrid:
         with open(filename, 'r') as file:
             for line in file:
                 row = [int(num) for num in line.split()]
+                # --- HIGHER ORDER IMPLEMENTATION #1 ---
+                # Instead of a loop or list comprehension, we use map().
+                # map() takes a function (int) and applies it to every item in the list.
+                # row = list(map(int, line.split()))
                 new_grid.append(row)
         
         # Update state
