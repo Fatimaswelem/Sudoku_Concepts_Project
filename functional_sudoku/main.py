@@ -2,7 +2,6 @@ import os
 from immutable_grid import Board, load_board_from_file
 from recursive_solver import solve
 
-# ---------- PURE BOARD STRING FUNCTIONS ----------
 def board_to_string(board: Board) -> str:
     return _rows_to_string(board, 0)
 

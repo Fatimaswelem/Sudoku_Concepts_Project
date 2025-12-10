@@ -2,6 +2,7 @@
 
 from typing import Optional
 from immutable_grid import Board, find_empty, set_cell
+from typing import Callable
 
 # Validity Checks
 
@@ -24,7 +25,8 @@ def _valid_col(board: Board, col: int, val: int, r: int) -> bool:
         return False
     return _valid_col(board, col, val, r + 1)
 
-def _valid_block(board: Board, row: int, col: int, val: int) -> bool:
+
+def check_block_recursive(row: int, col: int, fn: Callable[[int, int], bool]) -> bool:
     """Check 3x3 block for validity."""
     start_r, start_c = 3 * (row // 3), 3 * (col // 3)
 
@@ -33,11 +35,15 @@ def _valid_block(board: Board, row: int, col: int, val: int) -> bool:
             return True
         if c == start_c + 3:
             return check(r + 1, start_c)
-        if board[r][c] == val:
+        if not fn(r, c):
             return False
         return check(r, c + 1)
 
     return check(start_r, start_c)
+
+def _valid_block(board, row, col, val):
+    return check_block_recursive(row, col, lambda r, c: board[r][c] != val)
+
 
 # Recursive Sudoku Solver
 
