@@ -26,6 +26,8 @@ def _valid_col(board: Board, col: int, val: int, r: int) -> bool:
     return _valid_col(board, col, val, r + 1)
 
 
+# Higher order function to check 3x3 block using recursion
+
 def check_block_recursive(row: int, col: int, fn: Callable[[int, int], bool]) -> bool:
     """Check 3x3 block for validity."""
     start_r, start_c = 3 * (row // 3), 3 * (col // 3)
