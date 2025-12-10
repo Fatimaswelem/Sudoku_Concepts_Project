@@ -25,7 +25,7 @@ def main():
     # This finds the exact folder where main.py lives
     base_folder = os.path.dirname(os.path.abspath(__file__))
     # This goes up one level to 'Sudoku_Concepts_Project', then down to 'puzzles'
-    puzzle_path = os.path.join(base_folder, "..", "puzzles", "puzzle1.txt")
+    puzzle_path = os.path.join(base_folder, "..", "puzzles", "puzzle2.txt")
     
     # Debug print to show you exactly where it is looking
     print(f"Looking for puzzle at: {puzzle_path}")
