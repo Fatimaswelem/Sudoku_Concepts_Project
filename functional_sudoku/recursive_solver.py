@@ -44,7 +44,7 @@ def check_block_recursive(row: int, col: int, fn: Callable[[int, int], bool]) ->
     return check(start_r, start_c)
 
 def _valid_block(board, row, col, val):
-    return check_block_recursive(row, col, lambda r, c: board[r][c] != val)
+    return check_block_recursive(row, col, lambda r, c: board[r][c] != val) #high ordering line
 
 
 # Recursive Sudoku Solver

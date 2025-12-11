@@ -34,7 +34,7 @@ def main():
         game_state.load_from_file(puzzle_path)
     else:
         print(f"CRITICAL ERROR: Puzzle file not found at {puzzle_path}")
-        print("Please check that your folder structure is: Sudoku_Concepts_Project/puzzles/puzzle1.txt")
+        print("Please check that your folder structure is: Sudoku_Concepts_Project/puzzles/puzzle2.txt")
 
     # 2. Initialize GUI
     ui = SudokuGUI(screen)
